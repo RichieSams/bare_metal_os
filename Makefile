@@ -1,12 +1,12 @@
 ARMGNU ?= aarch64-linux-gnu
 
-CFLAGS = -Wall -O2 -std=gnu17 -nostdlib -nostartfiles -ffreestanding
+CFLAGS = -Wall -nostdlib -nostartfiles -ffreestanding -mgeneral-regs-only -DPRINTF_DISABLE_SUPPORT_FLOAT
 
 BUILD_DIR ?= build
 
 .PHONY: run
 
-all: $(BUILD_DIR)/kernel8.img
+all: build
 
 clean:
 	rm -rf $(BUILD_DIR)
@@ -15,7 +15,7 @@ clean:
 $(BUILD_DIR)/%_c.o: src/%.c
 	@mkdir -p $(@D)
 	@echo $<
-	@$(ARMGNU)-gcc $(CFLAGS) -MMD -Iinclude -Isrc/third_party/printf -c $< -o $@
+	@$(ARMGNU)-gcc $(CFLAGS) -MMD -Iinclude -Isrc/third_party -c $< -o $@
 	
 $(BUILD_DIR)/%_s.o: src/%.S
 	@mkdir -p $(@D)
@@ -41,6 +41,9 @@ $(BUILD_DIR)/kernel8.img: src/linker.ld $(OBJ_FILES)
 	@$(ARMGNU)-ld -T src/linker.ld -o $(BUILD_DIR)/kernel8.elf $(OBJ_FILES)
 	$(ARMGNU)-objcopy $(BUILD_DIR)/kernel8.elf -O binary $(BUILD_DIR)/kernel8.img
 
+/media/aastley/boot/kernel8.img: $(BUILD_DIR)/kernel8.img
+	cp $< $@
 
-run: $(BUILD_DIR)/kernel8.img
-	qemu-system-aarch64 -M raspi3 -kernel $(BUILD_DIR)/kernel8.img -serial stdio
+build: $(BUILD_DIR)/kernel8.img
+
+copy: /media/aastley/boot/kernel8.img

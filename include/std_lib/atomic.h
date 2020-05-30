@@ -1,4 +1,4 @@
-#include <inttypes.h>
+#include <stdint.h>
 
 uint64_t atomic_exchange(volatile uint64_t *ptr, uint64_t newVal);
 
