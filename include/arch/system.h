@@ -21,3 +21,5 @@ static inline unsigned int get_el() {
 
 	return el;
 }
+
+void reboot();

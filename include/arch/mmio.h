@@ -87,6 +87,18 @@
 #define SYSTEM_TIMER_CS_M1 (1 << 1)
 #define SYSTEM_TIMER_CS_M3 (1 << 3)
 
+/* Power Management, Reset controller and Watchdog registers */
+#define PM_BASE                  (MMIO_BASE + 0x100000)
+#define PM_RSTC                  (PM_BASE + 0x00001c)
+#define PM_WDOG                  (PM_BASE + 0x000024)
+#define PM_WDOG_RESET            0000000000
+#define PM_PASSWORD              0x5a000000
+#define PM_WDOG_TIME_SET         0x000fffff
+#define PM_RSTC_WRCFG_CLR        0xffffffcf
+#define PM_RSTC_WRCFG_SET        0x00000030
+#define PM_RSTC_WRCFG_FULL_RESET 0x00000020
+#define PM_RSTC_RESET            0x00000102
+
 static inline void mmio_store(size_t address, uint32_t val) {
 	asm volatile(
 	    "str %w[val], [ %[addr] ]"

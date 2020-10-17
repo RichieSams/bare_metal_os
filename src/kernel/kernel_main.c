@@ -25,16 +25,12 @@ void kernel_main() {
 	if (coreId == 0) {
 		while (1) {
 			char c = uart_recv();
-			// Serial sends DEL when hitting backspace
-			// So we have to manually fix it up
-			// Also, \b just moves the cursor back. It doesn't actually remove the character
-			if (c == 127 || c == '\b') {
-				uart_send('\b');
-				uart_send(' ');
-				uart_send('\b');
-			} else {
-				uart_send(c);
+			// If user presses ctrl+r, trigger a reboot
+			if (c == 18) {
+				reboot();
 			}
+
+			printf("Received: %d\n", c);
 		}
 	} else {
 		while (1) {
