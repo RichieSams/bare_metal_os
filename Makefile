@@ -46,4 +46,5 @@ $(BUILD_DIR)/kernel8.img: src/linker.ld $(OBJ_FILES)
 
 build: $(BUILD_DIR)/kernel8.img
 
-copy: /media/aastley/boot/kernel8.img
+copy:
+	scp $(BUILD_DIR)/kernel8.img pi@192.168.68.111:/srv/tftp/boot/d9ddb9dc/kernel8.img
