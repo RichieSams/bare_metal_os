@@ -3,9 +3,6 @@
 #include "printf/printf.h"
 #include "std_lib/atomic.h"
 
-static volatile uint64_t init = 0;
-static volatile uint64_t lock = 0;
-
 void kernel_main();
 
 void system_init() {
@@ -13,8 +10,8 @@ void system_init() {
 
 	printf("System init entered\n");
 
-	// Signal the other cores
-	init = 1;
+	unsigned currentEL = get_el();
+	printf("Current EL: %d\n", currentEL);
 }
 
 void kernel_main() {

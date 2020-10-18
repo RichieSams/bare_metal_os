@@ -1,6 +1,6 @@
 ARMGNU ?= aarch64-linux-gnu
 
-CFLAGS = -Wall -nostdlib -nostartfiles -ffreestanding -mgeneral-regs-only -DPRINTF_DISABLE_SUPPORT_FLOAT
+CFLAGS = -Wall -nostdlib -nostartfiles -ffreestanding
 
 BUILD_DIR ?= build
 
