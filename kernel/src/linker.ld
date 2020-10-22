@@ -1,5 +1,6 @@
 SECTIONS 
 {
+	. = 0x80000; /* Kernel load address for AArch64 Raspberry Pi 4 */
     .text.boot : { *(.text.boot) }
     .text : { *(.text) }
     .rodata : { *(.rodata) }

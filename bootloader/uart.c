@@ -1,7 +1,6 @@
 #include "arch/uart.h"
 
 #include "arch/mmio.h"
-#include "arch/timer.h"
 
 /*
  * Primary UART(16C650) register map
@@ -63,6 +62,12 @@
 #define UART0_TDR          (UART0_BASE + 0x8C)
 
 #define RX_BUFFER_MASK 0xFFF
+
+void wait_cycles(unsigned int n) {
+	for (unsigned int i = 0; i < n; ++i) {
+		asm volatile("nop");
+	}
+}
 
 void uart_send(char c) {
 	// Convert newline to carriage return + newline

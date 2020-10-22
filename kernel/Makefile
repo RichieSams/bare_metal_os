@@ -4,7 +4,6 @@ CFLAGS = -Wall -nostdlib -nostartfiles -ffreestanding
 
 BUILD_DIR ?= build
 
-.PHONY: run
 
 all: build
 
@@ -41,12 +40,4 @@ $(BUILD_DIR)/kernel8.img: src/linker.ld $(OBJ_FILES)
 	@$(ARMGNU)-ld -T src/linker.ld -o $(BUILD_DIR)/kernel8.elf $(OBJ_FILES)
 	$(ARMGNU)-objcopy $(BUILD_DIR)/kernel8.elf -O binary $(BUILD_DIR)/kernel8.img
 
-/media/aastley/boot/kernel8.img: $(BUILD_DIR)/kernel8.img
-	cp $< $@
-
 build: $(BUILD_DIR)/kernel8.img
-
-/srv/tftp/boot/d9ddb9dc/kernel8.img:
-	cp $(BUILD_DIR)/kernel8.img /srv/tftp/boot/d9ddb9dc/kernel8.img
-
-copy: /srv/tftp/boot/d9ddb9dc/kernel8.img
