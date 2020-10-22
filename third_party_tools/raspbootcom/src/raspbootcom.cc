@@ -130,8 +130,16 @@ void send_kernel(int fd, const char *file) {
 		                               read(file_fd, buf, BUF_SIZE));
 		size -= len;
 		while (keep_running && (len > 0)) {
-			ssize_t len2 = UnixError::check("sending kernel",
-			                                write(fd, &buf[pos], len));
+			ssize_t len2 = write(fd, &buf[pos], len);
+			if (len2 == -1) {
+				if (errno == EAGAIN) {
+					continue;
+				}
+
+				fprintf(stderr, "Error sending kernel: %d - %s", errno, strerror(errno));
+				return;
+			}
+
 			len -= len2;
 			pos += len2;
 		}
