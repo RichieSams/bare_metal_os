@@ -1,6 +1,6 @@
 ARMGNU ?= aarch64-linux-gnu
 
-CFLAGS = -Wall -nostdlib -nostartfiles -ffreestanding
+CFLAGS = -Wall -nostdlib -nostartfiles -ffreestanding -std=gnu17
 
 BUILD_DIR ?= build
 
